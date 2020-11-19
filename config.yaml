@@ -1,0 +1,14 @@
+db:
+  driver: sqlite3
+  addr: ./fabler.db
+redis:
+  addr: redis-db:6379
+  password:
+  db: 0
+admin:
+  name: admin
+  mail: myadmin
+  password: 300133ys
+secretkey: JustWriteSomethingWhatYouLike
+lang: en
+address: :8080
