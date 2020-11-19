@@ -8,14 +8,15 @@ import (
 	"github.com/snowitty/fabler/internal/model"
 )
 
-func GetQuestion(c *gin.Context) {
+// GetProfile func
+func GetProfile(c *gin.Context) {
 
-	var q model.Question
+	var p model.Profile
 	var err error
 
 	var id = c.Param("id")
 
-	q.ID, err = strconv.Atoi(id)
+	p.ID, err = strconv.Atoi(id)
 	if err != nil {
 		c.JSON(200, h.Response{
 			Status:  500,
@@ -24,7 +25,7 @@ func GetQuestion(c *gin.Context) {
 		return
 	}
 
-	if question, err := q.Get(); err != nil {
+	if profile, err := p.Get(); err != nil {
 
 		c.JSON(200, h.Response{
 			Status:  404,
@@ -35,7 +36,7 @@ func GetQuestion(c *gin.Context) {
 
 		c.JSON(200, h.Response{
 			Status:  200,
-			Message: question,
+			Message: profile,
 		})
 
 	}
@@ -43,16 +44,16 @@ func GetQuestion(c *gin.Context) {
 	return
 }
 
-// UpdateQuestion func
-func UpdateQuestion(c *gin.Context) {
+// UpdateProfile func
+func UpdateProfile(c *gin.Context) {
 
-	var q model.Question
+	var p model.Profile
 	var ra int64
 	var err error
 
 	var id = c.Param("id")
 
-	q.ID, err = strconv.Atoi(id)
+	p.ID, err = strconv.Atoi(id)
 	if err != nil {
 		c.JSON(200, h.Response{
 			Status:  500,
@@ -61,12 +62,11 @@ func UpdateQuestion(c *gin.Context) {
 		return
 	}
 
-	if err = c.ShouldBindJSON(&q); err != nil {
+	if err = c.ShouldBindJSON(&p); err != nil {
 		c.JSON(200, h.Response{Status: 500, Message: err.Error()})
 		return
 	}
-
-	if ra, err = q.Update(); err != nil {
+	if ra, err = p.Update(); err != nil {
 
 		c.JSON(200, h.Response{
 			Status:  404,
@@ -85,16 +85,16 @@ func UpdateQuestion(c *gin.Context) {
 	return
 }
 
-// DeleteQuestion func
-func DeleteQuestion(c *gin.Context) {
+// DeleteProfile func
+func DeleteProfile(c *gin.Context) {
 
-	var q model.Question
+	var p model.Profile
 	var ra int64
 	var err error
 
 	var id = c.Param("id")
 
-	q.ID, err = strconv.Atoi(id)
+	p.ID, err = strconv.Atoi(id)
 
 	if err != nil {
 		c.JSON(200, h.Response{
@@ -104,7 +104,7 @@ func DeleteQuestion(c *gin.Context) {
 		return
 	}
 
-	if ra, err = q.Delete(); err != nil {
+	if ra, err = p.Delete(); err != nil {
 
 		c.JSON(200, h.Response{
 			Status:  404,
@@ -123,16 +123,13 @@ func DeleteQuestion(c *gin.Context) {
 	return
 }
 
-// GetQuestions func
-func GetQuestions(c *gin.Context) {
+// GetProfiles func
+func GetProfiles(c *gin.Context) {
 
-	var q model.Question
+	var p model.Profile
 	var limit int
 	var offset int
 	var err error
-
-	questionProfileID, _ := strconv.Atoi(c.Query("questionProfileID"))
-	q.QuestionProfileID = questionProfileID
 
 	limit, err = strconv.Atoi(c.Query("limit"))
 	if err != nil {
@@ -152,7 +149,7 @@ func GetQuestions(c *gin.Context) {
 		return
 	}
 
-	if questions, err := q.GetList(limit, offset); err != nil {
+	if profiles, err := p.GetList(limit, offset); err != nil {
 
 		c.JSON(200, h.Response{
 			Status:  404,
@@ -163,7 +160,7 @@ func GetQuestions(c *gin.Context) {
 
 		c.JSON(200, h.Response{
 			Status:  200,
-			Message: questions,
+			Message: profiles,
 		})
 
 	}
@@ -171,15 +168,12 @@ func GetQuestions(c *gin.Context) {
 	return
 }
 
-// GetQuestionsCounts func
-func GetQuestionsCounts(c *gin.Context) {
+// GetProfilesCounts func
+func GetProfilesCounts(c *gin.Context) {
 
-	var q model.Question
+	var p model.Profile
 
-	questionProfileID, _ := strconv.Atoi(c.Query("questionProfileID"))
-	q.QuestionProfileID = questionProfileID
-
-	if counts, err := q.GetCounts(); err != nil {
+	if counts, err := p.GetCounts(); err != nil {
 
 		c.JSON(200, h.Response{
 			Status:  404,
