@@ -2,46 +2,45 @@ package conf
 
 import (
 	"fmt"
-	"github.com/spf13/viper"
 	"os"
+
+	"github.com/spf13/viper"
 )
 
 type Configuration struct {
-	DB struct{
+	DB struct {
 		Driver string `json:"driver"`
-		Addr string `json:"addr"`
-	}`json:"db"`
+		Addr   string `json:"addr"`
+	} `json:"db"`
 
-	Redis struct{
-		Addr string `json:"addr"`
+	Redis struct {
+		Addr     string `json:"addr"`
 		Password string `json:"password"`
-		Db int `json:"db"`
-	}`json:"redis"`
+		Db       int    `json:"db"`
+	} `json:"redis"`
 
-	Admin struct{
-		Name string `json:"name"`
-		Mail string `json:"mail"`
+	Admin struct {
+		Name     string `json:"name"`
+		Mail     string `json:"mail"`
 		Password string `json:"password"`
-	}`json:"admin"`
+	} `json:"admin"`
 
-	Address string `json:"address"`
-	Lang string `json:"lang"`
+	Address   string `json:"address"`
+	Lang      string `json:"lang"`
 	Secretkey string `json:"secretkey"`
 }
 
-
 var conf *Configuration
 
+func Config() *Configuration {
 
-func Config() *Configuration{
-
-	if conf != nil{
+	if conf != nil {
 		return conf
 	}
 
 	var err error
 
-	viper.SetConfigFile("configuration")
+	viper.SetConfigFile("config")
 	viper.AddConfigPath("../fabler/")
 	viper.SetConfigType("yaml")
 
@@ -57,6 +56,5 @@ func Config() *Configuration{
 	fmt.Println("Configuration.conf", conf)
 
 	return conf
-
 
 }
